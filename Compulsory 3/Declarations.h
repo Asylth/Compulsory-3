@@ -11,4 +11,4 @@
 #include <Windows.h>
 
 int startpass();
-void changepas();
+void changepas(); //for changing password

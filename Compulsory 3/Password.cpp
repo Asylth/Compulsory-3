@@ -44,7 +44,7 @@ std::string input;
 int startpass() {
 
 	std::srand(time(nullptr));
-	std::fstream Passf("Password.txt", std::ios::in);
+	std::fstream Passf("Password.txt", std::ios::in); //loads password from file
 	Passf >> password;
 	length = password.length();
 	passcode();
@@ -61,19 +61,19 @@ int startpass() {
 bool passcode() {
 	do {
 		while (lockmoves < 10) {
-			std::fstream File1("Userpass.txt", std::ios::out, std::ios::trunc);
+			std::fstream File1("Userpass.txt", std::ios::out); //To clean userpass
 			File1.close();
 			std::cout.unsetf(std::ios::trunc);
-			std::ofstream outf{ "Userpass.txt" };
-			printpass();
+			//std::ofstream outf{ "Userpass.txt" };
+			printpass(); //prints the board
 			lockmove();
 			lockmoves++;
-			int res = password.compare(userpass);
+			int res = password.compare(userpass); //checks if passwords match
 			if (res == 0){
 				return true;
 			}
 		};
-		resetpos();
+		resetpos(); //resets the arrays and vars
 		std::cout << "Wrong password! Try again\n";
 		Sleep(1000);
 		lockmoves = 0;
@@ -102,7 +102,7 @@ void printpass() {
 
 void lockmove() {
 	char ch;
-	if (lockmoves == 0) {
+	if (lockmoves == 0) { //places A at the start of the file
 		//std::fstream Rfile("Userpass.txt", std::ios::out | std::ios::app);
 		//Rfile << lockvalArray[lockposy][lockposx];
 		//Rfile.close();
@@ -110,7 +110,7 @@ void lockmove() {
 		File << lockvalArray[lockposy][lockposx];
 		File.close();
 	}
-	if (lockposx != 3) {
+	if (lockposx != 3) { //changes player pos to its actuall value
 		lockArray[lockposy][lockposx] = lockvalArray[lockposy][lockposx + 1] - 1;
 	}
 	else {
@@ -118,7 +118,7 @@ void lockmove() {
 	}
 
 
-	ch = _getch();
+	ch = _getch(); //condition check and moves player pos
 	switch (_getch()) {
 	case 'w': case 'W': case 'H': //up
 		if (lockposy != 0) {
@@ -144,18 +144,19 @@ void lockmove() {
 
 	
 	//std::fstream File2("Userpass.txt", std::ios::out | std::ios::app);
-	std::ofstream File1{ "Userpass.txt", std::ios::app};
+	std::ofstream File1{ "Userpass.txt", std::ios::app}; //opens userpass to append the char the player moved to
 	File1 << lockvalArray[lockposy][lockposx];
 	File1.close();
 
-	std::ifstream File2{ "Userpass.txt" };
+	std::ifstream File2{ "Userpass.txt" }; //takes everything in the file and writes it to userpass variable for later comparison
 	//std::fstream Wfile("Userpass.txt", std::ios::in);
 	while (!File2.eof()) {
 		std::getline(File2, userpass);
 	};
 	File2.close();
 
-	lockArray[lockposy][lockposx] = '*';
+
+	lockArray[lockposy][lockposx] = '*'; //moves player icon to new pos
 }
 
 
@@ -179,7 +180,7 @@ void resetpos() {
 }
 
 
-void changepas() {
+void changepas() {//for changing the password, not sure if working yet
 	char pchoice;
 	int newpas;
 	std::cout << "\n Do you want to change the password? (Y/N) \n";
@@ -199,7 +200,7 @@ void changepas() {
 	}
 }
 
-void paschange() {
+void paschange() {//had to make this a separate funtion because it did not work inside a switch function
 	for (int i = 0; i < input.length(); i++) {
 		input[i] = toupper(input[i]);
 	}
