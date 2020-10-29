@@ -64,6 +64,7 @@ bool passcode() {
 			std::fstream File1("Userpass.txt", std::ios::out, std::ios::trunc);
 			File1.close();
 			std::cout.unsetf(std::ios::trunc);
+			std::ofstream outf{ "Userpass.txt" };
 			printpass();
 			lockmove();
 			lockmoves++;
@@ -102,9 +103,12 @@ void printpass() {
 void lockmove() {
 	char ch;
 	if (lockmoves == 0) {
-		std::fstream Rfile("Userpass.txt", std::ios::out | std::ios::app);
-		Rfile << lockvalArray[lockposy][lockposx];
-		Rfile.close();
+		//std::fstream Rfile("Userpass.txt", std::ios::out | std::ios::app);
+		//Rfile << lockvalArray[lockposy][lockposx];
+		//Rfile.close();
+		std::ofstream File{ "Userpass.txt" };
+		File << lockvalArray[lockposy][lockposx];
+		File.close();
 	}
 	if (lockposx != 3) {
 		lockArray[lockposy][lockposx] = lockvalArray[lockposy][lockposx + 1] - 1;
@@ -139,14 +143,17 @@ void lockmove() {
 	}
 
 	
-	std::fstream File2("Userpass.txt", std::ios::out | std::ios::app);
-	File2 << lockvalArray[lockposy][lockposx];
-	File2.close();
+	//std::fstream File2("Userpass.txt", std::ios::out | std::ios::app);
+	std::ofstream File1{ "Userpass.txt", std::ios::app};
+	File1 << lockvalArray[lockposy][lockposx];
+	File1.close();
 
-	std::fstream Wfile("Userpass.txt", std::ios::in);
-	while (!Wfile.eof()) {
-		std::getline(Wfile, userpass);
+	std::ifstream File2{ "Userpass.txt" };
+	//std::fstream Wfile("Userpass.txt", std::ios::in);
+	while (!File2.eof()) {
+		std::getline(File2, userpass);
 	};
+	File2.close();
 
 	lockArray[lockposy][lockposx] = '*';
 }
@@ -184,7 +191,6 @@ void changepas() {
 		while (!std::cin.eof()) {
 		std::getline(std::cin, input);
 		}
-
 		std::cout << input << std::endl;
 		paschange();
 		break;
