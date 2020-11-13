@@ -141,8 +141,10 @@
   <ItemGroup>
     <ClCompile Include="Compulsory 3.cpp" />
     <ClCompile Include="Password.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Battleship.h" />
     <ClInclude Include="Declarations.h" />
   </ItemGroup>
   <ItemGroup>

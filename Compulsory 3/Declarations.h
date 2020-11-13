@@ -10,5 +10,8 @@
 #include <vector>
 #include <Windows.h>
 
-int startpass();
+
+int startpass(); //for password entering
 void changepas(); //for changing password
+void menu(); //for main menu
+void battleship(); //starts the game

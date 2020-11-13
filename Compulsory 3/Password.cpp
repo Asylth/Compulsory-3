@@ -58,11 +58,11 @@ int startpass() {
 }
 
 
-bool passcode() {
+bool passcode() { //for locking the number of moves and logic for making it work
 	do {
 		while (lockmoves < 10) {
-			std::fstream File1("Userpass.txt", std::ios::out); //To clean userpass
-			File1.close();
+			//std::fstream File1("Userpass.txt", std::ios::out); //To clean userpass
+			//File1.close();
 			std::cout.unsetf(std::ios::trunc);
 			//std::ofstream outf{ "Userpass.txt" };
 			printpass(); //prints the board
@@ -82,7 +82,7 @@ bool passcode() {
 
 }
 
-void printpass() {
+void printpass() { //prints the array
 	system("CLS");
 	std::cout << "------------------" << std::endl;
 	for (int j = 0; j < lockh; j++) {
@@ -160,7 +160,7 @@ void lockmove() {
 }
 
 
-void resetpos() {
+void resetpos() { //resets the player pos when you enter a wrong password
 	char restr = 'B';
 	//std::fstream File1("Userpass.txt", std::ios::out | std::ios::trunc);
 	//File1.close();
@@ -180,7 +180,37 @@ void resetpos() {
 }
 
 
-void changepas() {//for changing the password, not sure if working yet
+//void changepas() {//for changing the password, not sure if working yet
+//	char pchoice;
+//	int newpas;
+//	std::cout << "\n Do you want to change the password? (Y/N) \n";
+//	std::cin >> pchoice;
+//	switch (pchoice) {
+//	case 'y':case 'Y':
+//		std::cout << "Only letters will work! \n";
+//		std::cout << "Type in the new password: ";
+//		while (!std::cin.eof()) {
+//		std::getline(std::cin, input);
+//		}
+//		std::cout << input << std::endl;
+//		paschange();
+//		break;
+//	case 'n':case 'N':
+//		break;
+//	}
+//}
+//
+//void paschange() {//had to make this a separate funtion because it did not work inside a switch function
+//	for (int i = 0; i < input.length(); i++) {
+//		input[i] = toupper(input[i]);
+//	}
+//	std::fstream Passfile("Password.txt", std::ios::out);
+//	Passfile << input;
+//	Passfile.close();
+//	std::cout << input << std::endl;
+//}
+
+void changepas() {//for changing the password
 	char pchoice;
 	int newpas;
 	std::cout << "\n Do you want to change the password? (Y/N) \n";
@@ -189,9 +219,7 @@ void changepas() {//for changing the password, not sure if working yet
 	case 'y':case 'Y':
 		std::cout << "Only letters will work! \n";
 		std::cout << "Type in the new password: ";
-		while (!std::cin.eof()) {
-		std::getline(std::cin, input);
-		}
+		std::cin >> input;
 		std::cout << input << std::endl;
 		paschange();
 		break;
@@ -204,8 +232,8 @@ void paschange() {//had to make this a separate funtion because it did not work 
 	for (int i = 0; i < input.length(); i++) {
 		input[i] = toupper(input[i]);
 	}
-	std::fstream Passfile("Password.txt", std::ios::out);
-	Passfile << input;
+	std::fstream Passfile("Password.txt", std::ios::out | std::ios::trunc);
+	Passfile << input << std::endl;
 	Passfile.close();
 	std::cout << input << std::endl;
 }
